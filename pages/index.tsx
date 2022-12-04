@@ -12,8 +12,6 @@ export default function Home() {
     axios.get(API_URL).then((res) => setList(res.data));
   }
 
-  console.log(list);
-
   useEffect(() => {
     getData();
   }, []);
