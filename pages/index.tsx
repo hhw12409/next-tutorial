@@ -11,7 +11,11 @@ export default function Home() {
     "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
 
   function getData() {
-    axios.get(API_URL).then((res) => setList(res.data));
+    axios.get(API_URL).then((res) => {
+      if (res.status === 200) {
+        setList(res.data);
+      }
+    });
   }
 
   useEffect(() => {
