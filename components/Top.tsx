@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Header } from "semantic-ui-react";
 import Gnb from "./Gnb";
-import styles from "../../styles/Top.module.scss";
+import styles from "../styles/Top.module.scss";
 
 export default function Top() {
   return (

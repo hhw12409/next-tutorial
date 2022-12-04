@@ -1,6 +1,7 @@
 import axios from "axios";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import ItemList from "../components/ItemList";
 
 export default function Home() {
   const [list, setList] = useState([]);
@@ -11,6 +12,8 @@ export default function Home() {
     axios.get(API_URL).then((res) => setList(res.data));
   }
 
+  console.log(list);
+
   useEffect(() => {
     getData();
   }, []);
@@ -19,6 +22,7 @@ export default function Home() {
       <Head>
         <title>Home | NextJs</title>
       </Head>
+      <ItemList list={list} />
     </div>
   );
 }
