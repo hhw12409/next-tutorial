@@ -1,28 +1,31 @@
-import Image from "next/image";
-import { Button } from "semantic-ui-react";
+import { Button, Image } from "semantic-ui-react";
 import styles from "../styles/Item.module.scss";
 
 export default function Item({ item }: { item: Brand.Item }) {
   console.log(item);
   return (
     <>
-      <div>
-        <Image
-          src={item?.image_link}
-          alt={item?.name}
-          className={styles.thumbnail}
-          width={100}
-          height={100}
-        />
+      <div className={styles.wrap}>
+        <div className={styles.item_img}>
+          <Image
+            src={item?.image_link}
+            alt={item?.name}
+            width={150}
+            height={150}
+          />
+        </div>
+        <div className={styles.item_info}>
+          <strong>{item?.name}</strong>
+          <strong>${item?.price}</strong>
+          <span>
+            {item?.category ? `${item?.category}/` : ""}
+            {item?.product_type}
+          </span>
+          <Button primary>구매하기</Button>
+        </div>
       </div>
-      <div>
-        <strong>{item?.name}</strong>
-        <strong>${item?.price}</strong>
-      </div>
-      <Button primary>구매하기</Button>
-      <div>
-        <p>{item?.description}</p>
-      </div>
+      <h3>Description</h3>
+      <p className={styles.item_description}>{item?.description}</p>
     </>
   );
 }
