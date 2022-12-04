@@ -1,7 +1,9 @@
 import axios from "axios";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { Divider, Header } from "semantic-ui-react";
 import ItemList from "../components/ItemList";
+import styles from "../styles/Home.module.scss";
 
 export default function Home() {
   const [list, setList] = useState([]);
@@ -15,11 +17,14 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div>
       <Head>
         <title>Home | NextJs</title>
       </Head>
+      <h3 className={styles.header}>베스트 상품</h3>
+      <Divider />
       <ItemList list={list} />
     </div>
   );
