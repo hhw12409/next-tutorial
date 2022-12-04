@@ -23,9 +23,15 @@ export default function Home() {
       <Head>
         <title>Home | NextJs</title>
       </Head>
-      <h3 className={styles.header}>베스트 상품</h3>
-      <Divider />
-      <ItemList list={list} />
+      {["베스트상품", "신상품"].map((el, index) => (
+        <div key={index}>
+          <h3 className={styles.header}>{el}</h3>
+          <Divider />
+          <ItemList
+            list={el === "베스트상품" ? list.slice(0, 9) : list.slice(9)}
+          />
+        </div>
+      ))}
     </div>
   );
 }
