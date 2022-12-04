@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Item from "../../components/Item";
 
 export default function Post() {
   const router = useRouter();
   const { id } = router.query;
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState<Brand.Item>();
 
   function getData() {
     const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
@@ -22,5 +23,5 @@ export default function Post() {
     }
   }, [id]);
 
-  return <p>Post: {id}</p>;
+  return <Item item={item!} />;
 }
