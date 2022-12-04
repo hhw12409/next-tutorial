@@ -7,7 +7,7 @@ export default function ItemList({ list }: { list: Brand.Item[] }) {
         <Grid.Row>
           {list.map((el) => (
             <Grid.Column key={el.id}>
-              <Image src={el.image_link} alt="image" />
+              <Image src={el.image_link} alt={el.name} />
             </Grid.Column>
           ))}
         </Grid.Row>
