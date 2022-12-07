@@ -1,24 +1,30 @@
+import { useRouter } from "next/router";
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, MenuItemProps } from "semantic-ui-react";
 
 export default function Gnb() {
   const [activeItem, setActiveItem] = React.useState("home");
+  const router = useRouter();
+  function goLink(_: any, data: MenuItemProps) {
+    switch (data.name) {
+      case "home":
+        setActiveItem("home");
+        router.push("/");
+        break;
+      case "about":
+        setActiveItem("about");
+        router.push("/about");
+        break;
+    }
+  }
+
   return (
     <Menu inverted>
+      <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
       <Menu.Item
-        name="home"
-        active={activeItem === "home"}
-        // onClick={this.handleItemClick}
-      />
-      <Menu.Item
-        name="messages"
-        active={activeItem === "messages"}
-        // onClick={this.handleItemClick}
-      />
-      <Menu.Item
-        name="friends"
-        active={activeItem === "friends"}
-        // onClick={this.handleItemClick}
+        name="about"
+        active={activeItem === "about"}
+        onClick={goLink}
       />
     </Menu>
   );
