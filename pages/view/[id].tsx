@@ -1,38 +1,20 @@
-import { useRouter } from "next/router";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Item from "../../components/Item";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { NextPageContext } from "next";
 
-export default function Post() {
-  const router = useRouter();
-  const { id } = router.query;
-  const [item, setItem] = useState<Brand.Item>();
-  const [isLoading, setIsLoading] = useState(true);
+export default function Post({ data }: { data: Brand.Item }) {
+  return data && <Item item={data} />;
+}
 
-  function getData() {
-    const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
-    axios
-      .get(API_URL)
-      .then((res) => {
-        if (res.status === 200) {
-          setItem(res.data);
-        }
-      })
-      .then(() => setIsLoading((prev) => !prev));
-  }
+export async function getServerSideProps(context: NextPageContext) {
+  const { id } = context.query;
+  const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+  const res = await axios.get(API_URL);
+  const { data } = res;
 
-  useEffect(() => {
-    if (id && Number(id) > 0) {
-      getData();
-    }
-  }, [id]);
-
-  return isLoading ? (
-    <Dimmer active inverted>
-      <Loader inverted />
-    </Dimmer>
-  ) : (
-    <Item item={item!} />
-  );
+  return {
+    props: {
+      data,
+    },
+  };
 }
