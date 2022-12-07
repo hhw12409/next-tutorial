@@ -1,9 +1,20 @@
 import axios from "axios";
 import Item from "../../components/Item";
 import { NextPageContext } from "next";
+import Head from "next/head";
 
 export default function Post({ data }: { data: Brand.Item }) {
-  return data && <Item item={data} />;
+  return (
+    data && (
+      <>
+        <Head>
+          <title>{data.name}</title>
+          <meta name="description" content={data.description}></meta>
+        </Head>
+        <Item item={data} />
+      </>
+    )
+  );
 }
 
 export async function getServerSideProps(context: NextPageContext) {
