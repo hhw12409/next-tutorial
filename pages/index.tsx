@@ -33,6 +33,7 @@ export default function Home() {
     <div>
       <Head>
         <title>Home | NextJs</title>
+        <meta name="description" content="nextjs연습페이지 입니다."></meta>
       </Head>
       {isLoading ? (
         <Dimmer active inverted>
