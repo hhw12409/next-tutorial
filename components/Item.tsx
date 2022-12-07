@@ -2,7 +2,6 @@ import { Button, Image } from "semantic-ui-react";
 import styles from "../styles/Item.module.scss";
 
 export default function Item({ item }: { item: Brand.Item }) {
-  console.log(item);
   return (
     <>
       <div className={styles.wrap}>
