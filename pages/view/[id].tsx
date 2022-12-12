@@ -3,7 +3,13 @@ import Item from "../../components/Item";
 import { NextPageContext } from "next";
 import Head from "next/head";
 
-export default function Post({ data }: { data: Brand.Item }) {
+export default function Post({
+  data,
+  name,
+}: {
+  data: Brand.Item;
+  name: string;
+}) {
   return (
     data && (
       <>
@@ -11,6 +17,7 @@ export default function Post({ data }: { data: Brand.Item }) {
           <title>{data.name}</title>
           <meta name="description" content={data.description}></meta>
         </Head>
+        {name}환경 입니다.
         <Item item={data} />
       </>
     )

@@ -1,54 +1,39 @@
 import axios from "axios";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 import { Divider } from "semantic-ui-react";
 import ItemList from "../components/ItemList";
 import styles from "../styles/Home.module.scss";
-import { Dimmer, Loader } from "semantic-ui-react";
 
-export default function Home() {
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const API_URL = String(process.env.NEXT_PUBLIC_API_URL);
-
-  function getData() {
-    axios
-      .get(API_URL)
-      .then((res) => {
-        if (res.status === 200) {
-          setList(res.data);
-        }
-      })
-      .then(() => {
-        setIsLoading((prev) => !prev);
-      });
-  }
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+export default function Home({ list }: { list: Brand.Item[] }) {
+  console.log(list);
   return (
     <div>
       <Head>
         <title>Home | NextJs</title>
         <meta name="description" content="nextjs연습페이지 입니다."></meta>
       </Head>
-      {isLoading ? (
-        <Dimmer active inverted>
-          <Loader inverted />
-        </Dimmer>
-      ) : (
-        ["베스트상품", "신상품"].map((el, index) => (
-          <div key={index}>
-            <h3 className={styles.header}>{el}</h3>
-            <Divider />
-            <ItemList
-              list={el === "베스트상품" ? list.slice(0, 9) : list.slice(9)}
-            />
-          </div>
-        ))
-      )}
+      {["베스트상품", "신상품"].map((el, index) => (
+        <div key={index}>
+          <h3 className={styles.header}>{el}</h3>
+          <Divider />
+          <ItemList
+            list={el === "베스트상품" ? list.slice(0, 9) : list.slice(9)}
+          />
+        </div>
+      ))}
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const API_URL = String(process.env.API_URL);
+  const res = await axios.get(API_URL);
+  const { data } = res;
+
+  return {
+    props: {
+      list: data,
+      name: process.env.name,
+    },
+  };
 }
