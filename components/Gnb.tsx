@@ -7,25 +7,27 @@ export default function Gnb() {
   const router = useRouter();
   function goLink(_: any, data: MenuItemProps) {
     switch (data.name) {
-      case "home":
-        setActiveItem("home");
-        router.push("/");
-        break;
-      case "about":
-        setActiveItem("about");
-        router.push("/about");
+      case data.name:
+        setActiveItem(data.name!);
+        if (data.name === "home") {
+          router.push("/");
+        } else {
+          router.push(`/${data.name}`);
+        }
         break;
     }
   }
 
   return (
     <Menu inverted>
-      <Menu.Item name="home" active={activeItem === "home"} onClick={goLink} />
-      <Menu.Item
-        name="about"
-        active={activeItem === "about"}
-        onClick={goLink}
-      />
+      {["home", "about", "admin"].map((el) => (
+        <Menu.Item
+          name={el}
+          active={activeItem === el}
+          onClick={goLink}
+          key={el}
+        />
+      ))}
     </Menu>
   );
 }
