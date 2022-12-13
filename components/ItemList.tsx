@@ -9,7 +9,7 @@ export default function ItemList({ list }: { list: Brand.Item[] }) {
         <Grid.Row>
           {list.map((el) => (
             <Grid.Column key={el.id}>
-              <Link href={`/view/${el.id}`} key={el.id}>
+              <Link href={`/detail/${el.id}`} key={el.id}>
                 <div className={styles.wrapper}>
                   <Image
                     src={el.image_link}
