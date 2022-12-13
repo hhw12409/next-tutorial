@@ -1,6 +1,6 @@
 import axios from "axios";
 import Item from "../../components/Item";
-import { NextPageContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
 export default function Post({
@@ -24,8 +24,8 @@ export default function Post({
   );
 }
 
-export async function getServerSideProps(context: NextPageContext) {
-  const { id } = context.query;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { id } = context.params as any;
   const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
   const res = await axios.get(API_URL);
   const { data } = res;
