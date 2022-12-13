@@ -39,12 +39,18 @@ export default function Post({
 }
 
 export async function getStaticPaths() {
+  const API_URL = String(process.env.API_URL);
+  const res = await axios.get(API_URL);
+  const { data } = res;
   return {
-    paths: [
-      { params: { id: "740" } },
-      { params: { id: "730" } },
-      { params: { id: "729" } },
-    ],
+    // paths: {
+    //   {params: {id: "740"}},
+    //   {params: {id: "741"}},
+    //   {params: {id: "742"}},
+    // },
+    paths: data.map((el: Brand.Item) => ({
+      params: { id: String(el.id) },
+    })),
     // 없는페이지에 대한 대응
     fallback: true,
   };
