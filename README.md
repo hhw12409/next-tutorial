@@ -1,34 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# next-tutorial
 
-## Getting Started
+## .env 환경변수 셋팅
 
-First, run the development server:
+- node js환경에서는 process.env.변수명
+  (참고)서버사이드props내부는 브라우저 환경이 아님 서버에서 동작하는것임 // (번외) window.등등과 관련된것을 사용하면 error발생한다.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- browser환경에서는 process.env.NEXT_PUBLIC\_변수명
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pre-rendering (사전 렌더링)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Nextjs는 기본적으로 모든 페이지 pre-render (meta data또한 포함)
+- 사전에 HTML파일들을 만든다는 의미
+- 퍼포먼스 향상, SEO
+- spa환경에서서 serverSideRendering를 통해서 mpa못지 않게 검색엔진 최적화에 대응하며 퍼포먼스를 향상 시킨다.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Pre-rendering의 두가지 방식
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- 차이점은 _언제_ HTML을 만드냐!! 이다
 
-## Learn More
+1. Static Generation: 정적 생성
+2. Server-side Rendering: 서버 사이드 렌더링
 
-To learn more about Next.js, take a look at the following resources:
+### Static Generation: 정적 생성
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 빌드시에 HTML을 생성 미리 렌더링된 HTML을 유저들이 요청을 할 때마다 보여준다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Server-side Rendering: 서버 사이드 렌더링
 
-## Deploy on Vercel
+- 요청을 하면 그때 HTML을 만든다음 유저에게 보여준다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## nextjs는 페이지별로 정적 생성을 할지 서버 사이드 렌더링을 할 지 정할 수 있다.
+
+### Static Generation: 정적 생성 사용 예시
+
+페이지를 빌드 시점에 만들어두고 cdn을 통해서 재사용하기 때문에 대부분 케이스는 정적 생성이 빠르다.
+
+1. 마케팅 페이지
+2. 블로그 게시물
+3. 제품 목록
+4. 도움말, 문서
+   (미리 만들어 두는 경우)
+
+### Server-side Rendering: 서버 사이드 렌더링
+
+1. 항상 최신 상태 유지
+2. 관리자 페이지
+3. 분석 차트
+
+---
+
+## 그렇다면 dynamic router Static Generation이 불가능할것일까?
+
+어떤 id가 들어올지 모르기 때문에 모든제품의 HTML을 만들어 놓을수는 없다.
+그런데 만약!!!! 갯수가 한정적이고 id리스트를 알 수 있다면? 가능하다!! (getStaticPaths)
+
+### getStaticPaths를 이용한다.
