@@ -5,7 +5,6 @@ import ItemList from "../components/ItemList";
 import styles from "../styles/Home.module.scss";
 
 export default function Home({ list }: { list: Brand.Item[] }) {
-  console.log(list);
   return (
     <div>
       <Head>
